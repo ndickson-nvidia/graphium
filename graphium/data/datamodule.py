@@ -917,10 +917,12 @@ class MultitaskFromSmilesDataModule(BaseDataModule, IPUDataModuleModifier):
 
         explicit_H = featurization["explicit_H"] if "explicit_H" in featurization else False
         add_self_loop = featurization["add_self_loop"] if "add_self_loop" in featurization else False
+        merge_equivalent_mols = featurization["merge_equivalent_mols"] if "merge_equivalent_mols" in featurization else True
 
         # Save these for calling graphium_cpp.prepare_and_save_data later
         self.add_self_loop = add_self_loop
         self.explicit_H = explicit_H
+        self.merge_equivalent_mols = merge_equivalent_mols
 
         self.preprocessing_n_jobs = preprocessing_n_jobs
 
@@ -1137,6 +1139,7 @@ class MultitaskFromSmilesDataModule(BaseDataModule, IPUDataModuleModifier):
             self.add_self_loop,
             self.explicit_H,
             self.preprocessing_n_jobs,
+            self.merge_equivalent_mols,
         )
 
         for task, stats in all_stats.items():
